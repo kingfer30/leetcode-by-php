@@ -8,28 +8,18 @@ class Solution {
         if (empty($s)) {
             return 0;
         }
-        $box = [];
-        $sort = 0;
-        $ak = 0;
+        if (empty($s)) {
+            return 0;
+        }
+        $start = 0;
+        $count = 0;
+        $arr = [];
         for ($i = 0; $i < strlen($s); $i++) {
-            $tag = array_search($s[$i], $box);
-            if ($tag !==false) {
-                $b_total=count($box);
-                $sort = $b_total > $sort ? $b_total : $sort;
-                $box = array_slice($box, $tag + 1);
-                $b_total=count($box);
-                $ak= $b_total == 0 ? 0 : $b_total;
-                $box[$ak] = $s[$i];
-                $ak++;
-            } else {
-                $box[$ak] = $s[$i];
-                $ak++;
-            }
+            $start = max($start, $arr[ord($s[$i])]);
+            $count = max($count, ($i + 1) - $start);
+            $arr[ord($s[$i])] = ($i + 1);
         }
-        if (!empty($box)) {
-            $b_total=count($box);
-            $sort = $b_total > $sort ? $b_total : $sort;
-        }
-        return $sort;
+
+        return $count;
     }
 }
